@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<WorkflowInfo>
+  <Actions Sequential="then" Parallel="and">
+    <Action Name="Dokument konvertieren"
+        Assembly="Nauplius.WAS.2013, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1458f7a17eac05e9"
+        ClassName="Nauplius.WAS.ConversionWorkflow"
+        AppliesTo="doclib"
+        Category="Dokumentenkonvertierung">
+      <RuleDesigner Sentence="Umwandeln von %1 mit dem optionalen Präfix von %2 in den Dateityp %3.">
+        <FieldBind Id="1" Field="SourceItem" Text="Ausgangsdokument" DesignerType="ChooseDocLibItem"></FieldBind>
+        <FieldBind Id="2" Field="DestFile" Text="Präfix" DesignerType="TextArea"></FieldBind>
+        <FieldBind Id="3" Field="FileType" Text="Zieldateityp" DesignerType="Dropdown" TypeFrom="FileTypeParam">
+          <Option Name="doc" Value="doc" TypeFilter="System.String" />
+          <Option Name="dot" Value="dot" TypeFilter="System.String" />
+          <Option Name="docm" Value="docm" TypeFilter="System.String" />
+          <Option Name="docx" Value="docx" TypeFilter="System.String" />
+          <Option Name="dotm" Value="dotm" TypeFilter="System.String" />
+          <Option Name="dotx" Value="dotx" TypeFilter="System.String" />
+          <Option Name="mhtml" Value="mhtml" TypeFilter="System.String" />
+          <Option Name="pdf" Value="pdf" TypeFilter="System.String" />
+          <Option Name="rtf" Value="rtf" TypeFilter="System.String" />
+          <Option Name="xps" Value="xps" TypeFilter="System.String" />
+          <Option Name="xml" Value="xml" TypeFilter="System.String" />
+        </FieldBind>
+        <FieldBind Id="4" Field="ReturnGuid" Text="Die Guid der konvertierten Datei zurück" DesignerType="Dropdown">
+          <Option Name="Yes" Value="true" TypeFilter="System.Boolean" />
+          <Option Name="No" Value="false" TypeFilter="System.Boolean" />
+        </FieldBind>
+        <FieldBind Id="5" Field="DestFileGuid" Text="Ziel Datei Guid" DesignerType="ParameterNames"></FieldBind>
+      </RuleDesigner>
+      <Parameters>
+        <Parameter Name="__Context" 
+                   Type="Microsoft.SharePoint.WorkflowActions.WorkflowContext, Microsoft.SharePoint.WorkflowActions"
+                   Direction="In"/>
+        <Parameter Name="SourceItem"
+                   Type="System.String, mscorlib"/>
+        <Parameter Name="DestFile"
+                   Type="System.String, mscorlib"
+                   Direction="Optional"/>
+        <Parameter Name="FileType"
+                   Type="System.String, mscorlib"/>
+        <Parameter Name="ReturnGuid"
+                  Type="System.Boolean, mscorlib"/>
+        <Parameter Name="DestFileGuid"
+                   Type="System.String, mscorlib"
+                   Direction="Out" />
+      </Parameters>
+    </Action>
+  </Actions>
+</WorkflowInfo>

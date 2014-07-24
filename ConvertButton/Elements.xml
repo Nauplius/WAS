@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Elements xmlns="http://schemas.microsoft.com/sharepoint/">
+
+  <CustomAction
+      Id="NaupliusWASRibbonButton"
+      RegistrationId="101"
+      RegistrationType="List"
+      Location="CommandUI.Ribbon"
+      Sequence="5"
+      Title="Convert Documents">
+
+    <CommandUIExtension>
+      <CommandUIDefinitions>
+        <CommandUIDefinition Location="Ribbon.Documents.Groups._children">
+          <Group
+              Id="DocConversions"
+              Sequence="100"
+              Description="Document Conversion Controls"
+              Title="Document Conversion"
+              Template="DocConversionsTemplate">
+            <Controls Id="DocConversionsGroupControl">
+              <Button
+                Id="Ribbon.Documents.New.WASButton"
+                Alt="Convert"
+                Sequence="1"
+                Command="DocConvert"
+                Image32by32="/_layouts/15/images/Nauplius.WAS/Convert32x32.png"
+                Image16by16="/_layouts/15/images/Nauplius.WAS/Convert16x16.png"
+                LabelText="Convert"
+                TemplateAlias="o1"/>
+              <Button
+                Id="Ribbon.Documents.New.WASStatus"
+                Alt="Status"
+                Sequence="2"
+                Command="DocStatus"
+                Image32by32="/_layouts/15/images/Nauplius.WAS/Status32x32.png"
+                Image16by16="/_layouts/15/images/Nauplius.WAS/Status16x16.png"
+                LabelText="Status"
+                TemplateAlias="o2"/>
+              <Button
+                Id="Ribbon.Documents.New.WASHistory"
+                Alt="History"
+                Sequence="3"
+                Command="DocHistory"
+                Image32by32="/_layouts/15/images/Nauplius.WAS/History32x32.png"
+                Image16by16="/_layouts/15/images/Nauplius.WAS/History16x16.png"
+                LabelText="History"
+                TemplateAlias="o3"/>
+            </Controls>
+          </Group>
+        </CommandUIDefinition>
+        <CommandUIDefinition Location="Ribbon.Templates._children">
+          <GroupTemplate Id="DocConversionsTemplate">
+            <Layout Title="LargeLarge">
+              <OverflowSection Type="OneRow" TemplateAlias="o1" DisplayMode="Large"/>
+              <OverflowSection Type="OneRow" TemplateAlias="o2" DisplayMode="Large"/>
+              <OverflowSection Type="OneRow" TemplateAlias="o3" DisplayMode="Large"/>
+            </Layout>
+          </GroupTemplate>
+        </CommandUIDefinition>
+        <CommandUIDefinition Location="Ribbon.Documents.Scaling._children">
+          <MaxSize Id="Ribbon.Documents.Scaling.Custom.MaxSize" Sequence="15" GroupId="DocConversions" Size="LargeLarge" />
+        </CommandUIDefinition>
+      </CommandUIDefinitions>
+
+      <CommandUIHandlers>
+        <CommandUIHandler
+          Command="DocConvert"
+          EnabledScript="javascript:
+            SP.ListOperation.Selection.getSelectedItems().length > 0;"
+          CommandAction="javascript:
+            function resultCallback(result, value)
+            {
+              if (result == 1)
+              {
+                SP.UI.Notify.addNotification('Conversion Request Queued');
+              }
+              else if (result == 2)
+              {
+                SP.UI.Notify.addNotification('Conversion Request Failed');
+              }
+            }
+ 
+            var ctx = SP.ClientContext.get_current();
+            var items = SP.ListOperation.Selection.getSelectedItems(ctx);
+            var cItems = '';
+            var i;
+ 
+            for (i in items)
+            {
+              cItems += '|' + items[i].id;
+            }
+ 
+            if(cItems != '')
+            {
+              var options = {
+              url: '{SiteUrl}/_layouts/15/Nauplius.WAS/Convert.aspx?Items=' + cItems + '&amp;ListId={SelectedListId}&amp;Source={Source}',
+              allowMaximize: true,
+              showClose: true,
+              width: 900,
+              height: 460,
+              dialogReturnValueCallback: resultCallback};
+              SP.UI.ModalDialog.showModalDialog(options);
+            }" />
+        <CommandUIHandler
+          Command="DocHistory"
+          CommandAction="javascript:
+            function resultCallback(result, value)
+            {
+            }
+            
+            var ctx = SP.ClientContext.get_current();
+            var options = {
+              url: '{SiteUrl}/_layouts/15/Nauplius.WAS/History.aspx',
+              allowMaximize: true,
+              showClose: true,
+              width: 900,
+              height: 640,
+              dialogReturnValueCallback: resultCallback};
+              SP.UI.ModalDialog.showModalDialog(options);"/>
+        <CommandUIHandler
+          Command="DocStatus"
+          CommandAction="javascript:
+            function resultCallback(result, value)
+            {
+            }
+            
+            var ctx = SP.ClientContext.get_current();
+            var options = {
+              url: '{SiteUrl}/_layouts/15/Nauplius.WAS/Status.aspx',
+              allowMaximize: true,
+              showClose: true,
+              width: 900,
+              height: 640,
+              dialogReturnValueCallback: resultCallback};
+              SP.UI.ModalDialog.showModalDialog(options);"/>
+      </CommandUIHandlers>
+    </CommandUIExtension>
+  </CustomAction>
+
+  <CustomAction
+  Id="NaupliusWASFolder"
+  RegistrationId="0x0120"
+  RegistrationType="ContentType"
+  Location="EditControlBlock"
+  Sequence="10"
+  Title="Convert Folder"
+  ImageUrl="/_layouts/15/Images/Nauplius.WAS/Convert16x16.png">
+    <UrlAction
+      Url="javascript:OpenPopUpPageWithTitle('{SiteUrl}/_layouts/15/Nauplius.WAS/Folder.aspx?List={ListId}&amp;url={SiteUrl}&amp;item={ItemId};itemurl={ItemUrl}', RefreshOnDialogClose, 600, 400, 'Convert Folder')"/>
+  </CustomAction>
+</Elements>

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="b07cf335-f457-4f8a-b64d-b4fb83d836c4" solutionId="b07cf335-f457-4f8a-b64d-b4fb83d836c4" resetWebServer="true" title="Nauplius.WAS" description="Provides access to the Word Automation Services for Document Conversion." resetWebServerModeOnUpgrade="Recycle" sharePointProductVersion="15.0" name="Nauplius.WAS" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <features>
+    <featureReference itemId="eab37e30-a460-4182-a9d4-ee3dc91c2a81" />
+    <featureReference itemId="4102f440-da26-46c3-859b-a81db8f97110" />
+  </features>
+  <projectItems>
+    <projectItemReference itemId="e73721cd-9df5-435f-9f15-29a11e70351a" />
+    <projectItemReference itemId="d8fa1778-51ba-46c3-b358-852d45eb2923" />
+    <projectItemReference itemId="16bb5125-23cd-4b58-884c-ee7f42c99c93" />
+    <projectItemReference itemId="2facca88-3f39-4d1b-81cd-57e052eafdf5" />
+  </projectItems>
+</package>

@@ -1,0 +1,5 @@
+﻿.hide-file, .hide-site, .hide-web, .hide-settings   
+{
+    display: none;
+}
+#textwait, .wait { text-align: center; }
