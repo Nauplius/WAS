@@ -1,0 +1,224 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5C5453F0-F586-4039-B08B-047B6ED1E1BF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Nauplius.WAS</RootNamespace>
+    <AssemblyName>Nauplius.WAS</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{BB1F664B-9266-4fd6-B973-E1E44974B511};{14822709-B5A1-4724-98CA-57A101D1B079};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SandboxedSolution>False</SandboxedSolution>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <AssemblyDeploymentTarget>GlobalAssemblyCache</AssemblyDeploymentTarget>
+    <ActiveDeploymentConfiguration>Default</ActiveDeploymentConfiguration>
+    <FileUpgradeFlags>0</FileUpgradeFlags>
+    <UpgradeBackupLocation>C:\Users\trevor\Documents\Visual Studio 2012\Projects\was\Nauplius.WAS\Backup\</UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>..\..\..\SharePointDisposeCheckRuleSet.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Office.Word.Server, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files\Common Files\Microsoft Shared\Web Server Extensions\14\ISAPI\Microsoft.Office.Word.Server.dll</HintPath>
+    </Reference>
+    <Reference Include="microsoft.sharepoint.WorkflowActions, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="Microsoft.SharePoint" />
+    <Reference Include="System.Workflow.Activities" />
+    <Reference Include="System.Workflow.ComponentModel" />
+    <Reference Include="System.Workflow.Runtime" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ExecConversion.cs" />
+    <Compile Include="ExecWorkflow.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Features\Workflow\Workflow.EventReceiver.cs">
+      <DependentUpon>Workflow.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\Nauplius.WAS\SiteBrowser.aspx.cs">
+      <DependentUpon>SiteBrowser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\Nauplius.WAS\SiteBrowser.aspx.designer.cs">
+      <DependentUpon>SiteBrowser.aspx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\Nauplius.WAS\Conversion.aspx.cs">
+      <DependentUpon>Conversion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\Nauplius.WAS\Conversion.aspx.designer.cs">
+      <DependentUpon>Conversion.aspx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\Nauplius.WAS\Folder.aspx.cs">
+      <DependentUpon>Folder.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\Nauplius.WAS\Folder.aspx.designer.cs">
+      <DependentUpon>Folder.aspx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\Nauplius.WAS\History.aspx.cs">
+      <DependentUpon>History.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\Nauplius.WAS\History.aspx.designer.cs">
+      <DependentUpon>History.aspx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\Nauplius.WAS\Library.aspx.cs">
+      <DependentUpon>Library.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\Nauplius.WAS\Library.aspx.designer.cs">
+      <DependentUpon>Library.aspx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\Nauplius.WAS\Status.aspx.cs">
+      <DependentUpon>Status.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Layouts\Nauplius.WAS\Status.aspx.designer.cs">
+      <DependentUpon>Status.aspx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ConvertButton\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{c58597ae-5d37-4001-9eb6-831180bf584e}</SharePointProjectItemId>
+    </None>
+    <None Include="Features\ECBFeature\ECBFeature.feature">
+      <FeatureId>{18b76169-519a-46a6-81f3-c9fcb4ff72c2}</FeatureId>
+    </None>
+    <None Include="Features\Workflow\Workflow.feature">
+      <FeatureId>{e71ea527-bbdf-4765-9710-057275bad893}</FeatureId>
+    </None>
+    <None Include="Images\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{f2f6b7e4-35a1-4f14-95d6-b5e8dbbb270a}</SharePointProjectItemId>
+    </None>
+    <None Include="key.snk" />
+    <None Include="Layouts\Nauplius.WAS\js\jquery-1.9.1.min.map" />
+    <None Include="Layouts\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{4a484114-82ff-433d-ad72-5da6a4f895f4}</SharePointProjectItemId>
+    </None>
+    <None Include="Package\Package.package">
+      <PackageId>{375b38af-3168-4566-a3cf-8398d63e67eb}</PackageId>
+    </None>
+    <None Include="Package\Package.Template.xml">
+      <DependentUpon>Package.package</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Workflow-1031\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{216c82d4-c4e6-4d40-ab4b-9e9ab292f05a}</SharePointProjectItemId>
+    </None>
+    <None Include="Workflow-1031\WAS.Actions" />
+    <None Include="Workflow\SharePointProjectItem.spdata">
+      <SharePointProjectItemId>{569d8260-f6c7-4104-83b6-a821103eb182}</SharePointProjectItemId>
+    </None>
+    <None Include="Workflow\WAS.Actions">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ConvertButton\Elements.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Features\ECBFeature\ECBFeature.Template.xml">
+      <DependentUpon>ECBFeature.feature</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Features\Workflow\Workflow.Template.xml">
+      <DependentUpon>Workflow.feature</DependentUpon>
+    </Content>
+    <Content Include="Images\Nauplius.WAS\Convert16x16.png" />
+    <Content Include="Images\Nauplius.WAS\Convert32x32.png" />
+    <Content Include="Images\Nauplius.WAS\History16x16.png" />
+    <Content Include="Images\Nauplius.WAS\History32x32.png" />
+    <Content Include="Images\Nauplius.WAS\Status16x16.png" />
+    <Content Include="Images\Nauplius.WAS\Status32x32.png" />
+    <Content Include="Layouts\Nauplius.WAS\SiteBrowser.aspx" />
+    <Content Include="Layouts\Nauplius.WAS\Conversion.aspx" />
+    <Content Include="Layouts\Nauplius.WAS\Folder.aspx" />
+    <Content Include="Layouts\Nauplius.WAS\History.aspx" />
+    <None Include="Layouts\Nauplius.WAS\js\jquery-1.9.1-vsdoc.js" />
+    <Content Include="Layouts\Nauplius.WAS\js\jquery-1.9.1.js" />
+    <Content Include="Layouts\Nauplius.WAS\js\jquery-1.9.1.min.js" />
+    <Content Include="Layouts\Nauplius.WAS\js\spin.js" />
+    <Content Include="Layouts\Nauplius.WAS\js\spin.min.js" />
+    <Content Include="Layouts\Nauplius.WAS\Library.aspx" />
+    <Content Include="Layouts\Nauplius.WAS\Status.aspx" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0'">11.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(VSToolsPath)\SharePointTools\Microsoft.VisualStudio.SharePoint.targets" Condition="'$(VSToolsPath)' != ''" />
+</Project>

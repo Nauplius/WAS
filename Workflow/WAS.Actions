@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<WorkflowInfo Language="en-us">
+  <Actions Sequential="then" Parallel="and">
+    <Action Name="Convert Document"
+        Assembly="Nauplius.WAS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a9fccf6997115bae"
+        ClassName="Nauplius.WAS.ConversionWorkflow"
+        AppliesTo="doclib"
+        Category="Document Conversions">
+      <RuleDesigner Sentence="Convert %1 with an optional prefix of %2 and a file type of %3.">
+        <FieldBind Id="1" Field="SourceItem" Text="Source Document" DesignerType="ChooseDocLibItem"></FieldBind>
+        <FieldBind Id="2" Field="DestFile" Text="Prefix" DesignerType="TextArea"></FieldBind>
+        <FieldBind Id="3" Field="FileType" Text="Destination File Type" DesignerType="Dropdown" TypeFrom="FileTypeParam">
+          <Option Name="doc" Value="doc" TypeFilter="System.String" />
+          <Option Name="dot" Value="dot" TypeFilter="System.String" />
+          <Option Name="docm" Value="docm" TypeFilter="System.String" />
+          <Option Name="docx" Value="docx" TypeFilter="System.String" />
+          <Option Name="dotm" Value="dotm" TypeFilter="System.String" />
+          <Option Name="dotx" Value="dotx" TypeFilter="System.String" />
+          <Option Name="mhtml" Value="mhtml" TypeFilter="System.String" />
+          <Option Name="pdf" Value="pdf" TypeFilter="System.String" />
+          <Option Name="rtf" Value="rtf" TypeFilter="System.String" />
+          <Option Name="xps" Value="xps" TypeFilter="System.String" />
+          <Option Name="xml" Value="xml" TypeFilter="System.String" />
+        </FieldBind>
+      </RuleDesigner>
+      <Parameters>
+        <Parameter Name="__Context" 
+                   Type="Microsoft.SharePoint.WorkflowActions.WorkflowContext, Microsoft.SharePoint.WorkflowActions"
+                   Direction="In"/>
+        <Parameter Name="SourceItem"
+                   Type="System.String, mscorlib"/>
+        <Parameter Name="DestFile"
+                   Type="System.String, mscorlib"
+                   Direction="Optional"/>
+        <Parameter Name="FileType"
+                   Type="System.String, mscorlib"/>
+      </Parameters>
+    </Action>
+  </Actions>
+</WorkflowInfo>
