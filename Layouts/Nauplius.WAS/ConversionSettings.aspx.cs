@@ -1,10 +1,13 @@
-﻿using Microsoft.Office.Word.Server.Conversions;
+﻿using System.Collections;
+using Microsoft.Office.Word.Server.Conversions;
+using Microsoft.SharePoint;
 using Microsoft.SharePoint.WebControls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using ServiceStack.Text;
 
 namespace Nauplius.WAS.Layouts.Nauplius.WAS
 {
@@ -16,6 +19,15 @@ namespace Nauplius.WAS.Layouts.Nauplius.WAS
             var fileType = Request.QueryString["fileType"];
             cBoxDelSource.Attributes.Add("onmouseover", "DelSourceHelp()");
             cBoxDelSource.Attributes.Add("onmouseout", "RemoveHelp()");
+
+            try
+            {
+                var fileSettings = Request.QueryString["settings"];
+            }
+            catch (Exception)
+            {
+
+            }
 
             if (fileType == "pdf" || fileType == "xps")
             {
@@ -79,6 +91,34 @@ namespace Nauplius.WAS.Layouts.Nauplius.WAS
 
         protected void btnSave_OnClick(object sender, EventArgs e)
         {
+            var pdfOptions = new List<string>{};
+
+            pdfOptions.AddRange(from ListItem li in cBoxList.Items
+                                    where li.Selected
+                                    select li.Value);
+
+            var settings = new SettingsOptions()
+            {
+                FileName =  Request.QueryString["fileName"],
+                FileType = Request.QueryString["fileType"],
+                BallonOps = dvddl1.SelectedValue,
+                BookmarkOps = dvddl2.SelectedValue,
+                PdfOps = pdfOptions.ToArray(),
+                DeleteSource = false,
+                StorageControl = Request.QueryString["settings"]
+            };
+
+            var jsonSettings = JsonSerializer.SerializeToString(settings);
+
+            var response =
+    string.Format(
+        "<script type='text/javascript'>var retArray = new Array; retArray.push(\'{0}\');" +
+        "window.frameElement.commitPopup(retArray);</script>", jsonSettings);
+            Context.Response.Write(response);
+            Context.Response.Flush();
+            Context.Response.End();
+            /*
+
             var fileType = Request.QueryString["fileType"];
             var element = Request.QueryString["ParentElement"];
             var fileName = Request.QueryString["fileName"];
@@ -108,31 +148,33 @@ namespace Nauplius.WAS.Layouts.Nauplius.WAS
                     Context.Response.End();
                 }
             }
-            else if (fileType == "docx" || fileType == "docm" || fileType == "dotx" ||
-                fileType == "dotm" || fileType == "doc" || fileType == "dot")
+           
+        else if (fileType == "docx" || fileType == "docm" || fileType == "dotx" ||
+            fileType == "dotm" || fileType == "doc" || fileType == "dot")
+        {
+            if (!string.IsNullOrEmpty(element))
             {
-                if (!string.IsNullOrEmpty(element))
+                var docOptsOut = new List<string>
                 {
-                    var docOptsOut = new List<string>
-                    {
-                        "x:" + fileType + ";c:" + dvddl3.SelectedValue
-                    };
+                    "x:" + fileType + ";c:" + dvddl3.SelectedValue
+                };
 
-                    docOptsOut.AddRange(from ListItem li in cBoxWordList.Items
-                                            where li.Selected
-                                            select li.Value);
+                docOptsOut.AddRange(from ListItem li in cBoxWordList.Items
+                                        where li.Selected
+                                        select li.Value);
 
-                    var wordOptsRtn = string.Join(";", docOptsOut) + ";d:" + cBoxDelSource.Checked;
+                var wordOptsRtn = string.Join(";", docOptsOut) + ";d:" + cBoxDelSource.Checked;
 
-                    var response =
-                        string.Format(
-                            "<script type='text/javascript'>var retArray = new Array; retArray.push(\'{0}\',\'{1}\',\'{2}\',\'{3}\');" +
-                            "window.frameElement.commitPopup(retArray);</script>", wordOptsRtn, element, fileName, fileSettings);
-                    Context.Response.Write(response);
-                    Context.Response.Flush();
-                    Context.Response.End();
-                }
+                var response =
+                    string.Format(
+                        "<script type='text/javascript'>var retArray = new Array; retArray.push(\'{0}\',\'{1}\',\'{2}\',\'{3}\');" +
+                        "window.frameElement.commitPopup(retArray);</script>", wordOptsRtn, element, fileName, fileSettings);
+                Context.Response.Write(response);
+                Context.Response.Flush();
+                Context.Response.End();
             }
+
+        }*/
         }
 
         internal void BookmarkOptions()

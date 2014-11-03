@@ -1,4 +1,7 @@
 ﻿using System.Data;
+using System.Web;
+using System.Web.Script.Services;
+using System.Web.Services;
 using System.Web.UI.HtmlControls;
 using Microsoft.Office.Word.Server.Conversions;
 using Microsoft.SharePoint;
@@ -9,9 +12,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using ServiceStack;
+using ServiceStack.Text;
 
 namespace Nauplius.WAS.Layouts.Nauplius.WAS
 {
+    [ScriptService]
     public partial class Conversion : LayoutsPageBase
     {
         protected void Page_Init(object sender, EventArgs e)
@@ -45,6 +51,14 @@ namespace Nauplius.WAS.Layouts.Nauplius.WAS
         protected void Page_Load(object sender, EventArgs e)
         {
             if (IsPostBack) ;
+
+            var sm = ScriptManager.GetCurrent(Page);
+
+            if (sm != null)
+            {
+                sm.EnablePageMethods = true;
+            }
+
         }
 
         private void CreateTable(string[] items, SPList list)
@@ -170,10 +184,10 @@ namespace Nauplius.WAS.Layouts.Nauplius.WAS
                 string docicon = SPUtility.ConcatUrls("/_layouts/images",
                     SPUtility.MapToIcon(listItem.Web, SPUtility.ConcatUrls(listItem.Web.Url, listItem.Url), "",
                         IconSize.Size16));
-                row["Type"] = string.Format("<img src='{0}' />", docicon);
+                row["Type"] = String.Format("<img src='{0}' />", docicon);
                 row["FileName"] = listItem.DisplayName;
                 row["FileType"] = null;
-                row["NewName"] = string.Empty;
+                row["NewName"] = String.Empty;
                 row["Destination"] = null;
                 row["Browse"] = null;
                 row["Web"] = listItem.Web.Url;
@@ -352,6 +366,41 @@ namespace Nauplius.WAS.Layouts.Nauplius.WAS
             Page.Response.Clear();
             Page.Response.Write("<script type=\"text/javascript\">window.frameElement.commonModalDialogClose(0);</script>");
             Page.Response.End();
+        }
+
+        protected override void Render(System.Web.UI.HtmlTextWriter writer)
+        {
+            System.Web.UI.ScriptManager.RegisterClientScriptBlock(this, typeof(Conversion), "semicolon", ";", true);
+            base.Render(writer);
+        }
+
+        [WebMethod(EnableSession = true)]
+        public static void SaveData(string data)
+        {
+            var storageItem = string.Empty;
+            var jsonData = JsonObject.Parse(data);
+            jsonData.TryGetValue("StorageControl", out storageItem);
+
+            if (!string.IsNullOrEmpty(storageItem))
+            {
+                var page = HttpContext.Current.Handler as Page;
+
+                if (page != null)
+                {
+                    var text1 = (TextBox)page.FindControl(storageItem);
+                    if (text1 != null)
+                    {
+                        text1.Text = jsonData.SerializeToString();
+                    }
+                }
+
+            }
+        }
+
+        [WebMethod(EnableSession = true)]
+        public static void LoadData()
+        {
+
         }
     }
 

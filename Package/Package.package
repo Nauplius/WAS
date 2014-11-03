@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="1.0.0.0" Id="b07cf335-f457-4f8a-b64d-b4fb83d836c4" solutionId="b07cf335-f457-4f8a-b64d-b4fb83d836c4" resetWebServer="true" title="Nauplius.WAS" description="Provides access to the Word Automation Services for Document Conversion." resetWebServerModeOnUpgrade="Recycle" sharePointProductVersion="15.0" name="Nauplius.WAS" xmlns="http://schemas.microsoft.com/VisualStudio/2008/SharePointTools/PackageModel">
+  <assemblies>
+    <customAssembly location="ServiceStack.Text.dll" deploymentTarget="GlobalAssemblyCache" sourcePath="bin\Debug\ServiceStack.Text.dll" />
+  </assemblies>
   <features>
     <featureReference itemId="eab37e30-a460-4182-a9d4-ee3dc91c2a81" />
     <featureReference itemId="4102f440-da26-46c3-859b-a81db8f97110" />

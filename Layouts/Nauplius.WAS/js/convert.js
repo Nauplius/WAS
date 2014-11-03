@@ -57,10 +57,21 @@ function ShowSettings(rowId, fileTypeDropDownList, fileName, fileSettings) {
     var itemSettingsUrl = "";
     var fileTypeDdl = document.getElementById(fileTypeDropDownList);
     var fileType = fileTypeDdl.options[fileTypeDdl.selectedIndex].value;
+    var tbox1 = document.getElementById(fileSettings);
+    /*
+    var loc = window.location.href.substr(0, window.location.href.indexOf('?'));
+
+    $.ajax({
+        type: "GET",
+        url: loc + "/LoadData",
+        async: false,
+        contentType: "application/json; charset=utf-8",
+    })
+    */
 
     if (_spPageContextInfo.siteServerRelativeUrl == "/") {
         itemSettingsUrl = "/_layouts/15/Nauplius.WAS/ConversionSettings.aspx?ParentElement=" + rowId + "&FileType=" + fileType +
-            "&FileName=" + fileName + "&Settings=" + fileSettings + "&IsDlg=1";
+            "&FileName=" + fileName + "&Settings=" + fileSettings + "&j=" + tbox1.innerText + "&IsDlg=1";
     } else {
         itemSettingsUrl = _spPageContextInfo.siteServerRelativeUrl + "/_layouts/15/Nauplius.WAS/ConversionSettings.aspx?ParentElement=" + rowId + "&FileType=" + fileType +
             "&FileName=" + fileName + "&Settings=" + fileSettings + "&IsDlg=1";
@@ -76,6 +87,24 @@ function ShowSettings(rowId, fileTypeDropDownList, fileName, fileSettings) {
 
     function dialogCallback(dialogResult, returnValue) {
         if (dialogResult == SP.UI.DialogResult.OK) {
+            var loc = window.location.href.substr(0, window.location.href.indexOf('?'));
+            var jsonData = returnValue[0];
+
+            $.ajax({
+                type: "POST",
+                url: loc + "/SaveData",
+                data: JSON.stringify({ data: jsonData }),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                async:false,
+                done: function (msg) { alert(msg.d); },
+                fail: function (xhr, ajaxOptions, thrownError) {
+                    console.log('error:');
+                    console.log(xhr.status);
+                    console.log(thrownError);
+                }
+            });
+            /*
             var settings = returnValue[0];
 
             document.getElementById(fileSettings).innerText = settings;
@@ -85,7 +114,7 @@ function ShowSettings(rowId, fileTypeDropDownList, fileName, fileSettings) {
                 tBox1.innerText = settings; //IE8 and below support
             } else {
                 tBox1.textContent = settings; //Everything else
-            }
+            }*/
         }
     }
 }

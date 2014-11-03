@@ -8,6 +8,7 @@
 <%@ Page Language="C#" AutoEventWireup="true" EnableViewState="true" CodeBehind="Convert.aspx.cs" Inherits="Nauplius.WAS.Layouts.Nauplius.WAS.Conversion" DynamicMasterPageFile="~masterurl/default.master" %>
 
 <asp:Content ID="Main" ContentPlaceHolderID="PlaceHolderMain" runat="server">
+    <SharePoint:FormDigest runat="server" />
     <p id="p1" runat="server" Visible="False">
         For each file, select the file type to convert to, and optionally enter a new file name with no extension. New files may take up to 15 minutes to appear in this Library.
     </p>
@@ -15,7 +16,7 @@
     <SharePoint:SPGridView runat="server" ID="gvItems" AutoGenerateColumns="False" Enabled="True" OnRowDataBound="gvItems_OnRowDataBound" EnableViewState="True">
         <HeaderStyle HorizontalAlign="Center"/>
         <RowStyle HorizontalAlign="Center" />
-        </SharePoint:SPGridView>
+    </SharePoint:SPGridView>
     <br/>
     <div id="spinwait" class="wait">
         <br/>
