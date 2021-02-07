@@ -1,3 +1,7 @@
+**Repository Moved**
+
+This repository has moved to [tseward/WAS](https://github.com/tseward/WAS).
+
 WAS
 ===
 
